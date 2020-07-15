@@ -5,7 +5,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import {RestApplication, RestBindings, RequestBodyValidationOptions} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
@@ -17,6 +17,14 @@ export class Lb4NewApplication extends BootMixin(
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    const validationOptions: RequestBodyValidationOptions = {
+      $data: true,
+      ajvKeywords: true,
+      ajvErrors: true
+    };
+
+    //this.bind(RestBindings.REQUEST_BODY_PARSER_OPTIONS).to({validation: validationOptions});
 
     // Set up the custom sequence
     this.sequence(MySequence);
